@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Amit Sharma",
+    "mobile": "9876543210",
+    "email": "amit.sharma@example.com",
+    "work_location_state": "Maharashtra",
+    "work_location_district": "Pune",
+    "desired_transfer_state": "Delhi",
+    "desired_transfer_district": "South Delhi"
+  },
+  {
+    "name": "Neha Verma",
+    "mobile": "9123456780",
+    "email": "neha.verma@example.com",
+    "work_location_state": "Karnataka",
+    "work_location_district": "Bangalore",
+    "desired_transfer_state": "Kerala",
+    "desired_transfer_district": "Kochi"
+  },
+  {
+    "name": "Rahul Mehta",
+    "mobile": "9988776655",
+    "email": "rahul.mehta@example.com",
+    "work_location_state": "Tamil Nadu",
+    "work_location_district": "Chennai",
+    "desired_transfer_state": "Maharashtra",
+    "desired_transfer_district": "Mumbai"
+  },
+  {
+    "name": "Pooja Singh",
+    "mobile": "9871234560",
+    "email": "pooja.singh@example.com",
+    "work_location_state": "Rajasthan",
+    "work_location_district": "Jaipur",
+    "desired_transfer_state": "Gujarat",
+    "desired_transfer_district": "Ahmedabad"
+  },
+  {
+    "name": "Vikas Kumar",
+    "mobile": "9800123456",
+    "email": "vikas.kumar@example.com",
+    "work_location_state": "Uttar Pradesh",
+    "work_location_district": "Lucknow",
+    "desired_transfer_state": "Bihar",
+    "desired_transfer_district": "Patna"
+  },
+  {
+    "name": "Amit Sharma",
+    "mobile": "9876543210",
+    "email": "amit.sharma@example.com",
+    "work_location_state": "Maharashtra",
+    "work_location_district": "Pune",
+    "desired_transfer_state": "Delhi",
+    "desired_transfer_district": "South Delhi"
+  },
+  {
+    "name": "Neha Verma",
+    "mobile": "9123456780",
+    "email": "neha.verma@example.com",
+    "work_location_state": "Karnataka",
+    "work_location_district": "Bangalore",
+    "desired_transfer_state": "Kerala",
+    "desired_transfer_district": "Kochi"
+  },
+  {
+    "name": "Rahul Mehta",
+    "mobile": "9988776655",
+    "email": "rahul.mehta@example.com",
+    "work_location_state": "Tamil Nadu",
+    "work_location_district": "Chennai",
+    "desired_transfer_state": "Maharashtra",
+    "desired_transfer_district": "Mumbai"
+  },
+  {
+    "name": "Vikas Kumar",
+    "mobile": "9800123456",
+    "email": "vikas.kumar@example.com",
+    "work_location_state": "Uttar Pradesh",
+    "work_location_district": "Lucknow",
+    "desired_transfer_state": "Bihar",
+    "desired_transfer_district": "Patna"
+  },
+  {
+    "name": "Amit Sharma",
+    "mobile": "9876543210",
+    "email": "amit.sharma@example.com",
+    "work_location_state": "Maharashtra",
+    "work_location_district": "Pune",
+    "desired_transfer_state": "Delhi",
+    "desired_transfer_district": "South Delhi"
+  }
+]
