@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy": "http://localhost:5001",
   "scripts": {
     "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/output.css",
     "watch:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/output.css --watch",
