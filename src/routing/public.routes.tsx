@@ -14,7 +14,11 @@ const routers = [
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <div className="p-4 flex-1 bg-[#1b1b1f] overflow-scroll h-[100vh]">
+            <Home />,
+          </div>
+        ),
       },
       {
         path: "/signin",
