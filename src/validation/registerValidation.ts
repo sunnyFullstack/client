@@ -15,3 +15,13 @@ export const registerValidationSchema = Yup.object().shape({
     .oneOf([Yup.ref("password")], "Passwords must match"),
   gender: Yup.string().required("Gender is required"),
 });
+
+export const profileValidationSchema = Yup.object().shape({
+  firstname: Yup.string().required("First name is required"),
+  lastname: Yup.string().required("Last name is required"),
+  mobile: Yup.string()
+    .matches(/^\d{10}$/, "Mobile must be 10 digits")
+    .required("Mobile is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  gender: Yup.string().required("Gender is required"),
+});

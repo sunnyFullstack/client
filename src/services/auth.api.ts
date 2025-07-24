@@ -1,4 +1,3 @@
-import { Method } from "./../../node_modules/@babel/types/lib/index-legacy.d";
 // src/services/auth.api.ts
 import { api } from "./api";
 import {
@@ -10,6 +9,13 @@ import {
 
 export const authApi: any = api.injectEndpoints({
   endpoints: (builder) => ({
+    profileEdit: builder.mutation<RegisterResponse, RegisterRequest>({
+      query: (body) => ({
+        url: "auth/profileedit",
+        method: "PUT",
+        body: body,
+      }),
+    }),
     register: builder.mutation<RegisterResponse, RegisterRequest>({
       query: (body) => ({
         url: "auth/register",
@@ -42,6 +48,7 @@ export const authApi: any = api.injectEndpoints({
 });
 
 export const {
+  useProfileEditMutation,
   useRegisterMutation,
   useLoginMutation,
   useGetProfileQuery,

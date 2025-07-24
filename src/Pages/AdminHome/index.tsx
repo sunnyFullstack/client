@@ -3,12 +3,16 @@ import ProfileCard from "../../Components/ProfileCard";
 import PageWrapper from "../../Components/Wrapper";
 import Input from "../../Components/Input/Input";
 import profiles from "../../data/profile.json";
+import { useGetUsersMutation } from "../../services/users.api";
 
 const AdminHome = () => {
   const [profileData, setProfileData] = useState<any>();
   const [searchTerm, setSearchTerm] = useState("");
+  const [getUsers, { data, isLoading, isSuccess, error, status, isError }] =
+    useGetUsersMutation();
   useEffect(() => {
     setProfileData(profiles);
+    getUsers();
   }, []);
   const filteredProfiles = profileData?.filter((profile: any) => {
     const term = searchTerm.toLowerCase();

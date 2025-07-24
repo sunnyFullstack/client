@@ -11,6 +11,7 @@ type InputProps = {
   className?: string;
   parentClassName?: string;
   placeholder?: string;
+  isDisable?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -23,6 +24,7 @@ const Input: React.FC<InputProps> = ({
   error,
   className,
   placeholder,
+  isDisable,
 }) => {
   return (
     <>
@@ -32,6 +34,7 @@ const Input: React.FC<InputProps> = ({
             {label}
           </label>
           <input
+            disabled={isDisable}
             placeholder={placeholder}
             type={type}
             name={name}
@@ -39,7 +42,7 @@ const Input: React.FC<InputProps> = ({
             onChange={onChange}
             onBlur={onBlur}
             required
-            className={` border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
+            className={` border border-gray-300 disabled:text-grey rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
           />
           {error && <p className="text-red text-xs">{error}</p>}
         </div>
