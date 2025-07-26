@@ -53,21 +53,25 @@ const ProfileView: React.FC<ProfileViewProps> = ({ onEdit }: any) => {
           <div className="text-start">
             <p className="font-bold text-sm">Email</p>
             <p className="text-gray-600 text-sm break-words">
-              {profileData?.email}
+              {profileData?.email || "--"}
             </p>
           </div>
           <div className="text-start pt-8">
             <p className="font-bold text-sm">Phone</p>
-            <p className="text-gray-600 text-sm">{profileData?.mobile}</p>
+            <p className="text-gray-600 text-sm">
+              {profileData?.mobile || "--"}
+            </p>
           </div>
           <div className="text-start pt-8">
             <p className="font-bold text-sm">Gender</p>
-            <p className="text-gray-600 text-sm">{profileData?.gender}</p>
+            <p className="text-gray-600 text-sm">
+              {profileData?.gender || "--"}
+            </p>
           </div>
           <div className="text-start  pt-8">
             <p className="font-bold text-sm">School Name</p>
             <p className="text-gray-600 text-sm">
-              {profileData?.school_info?.school_name}
+              {profileData?.school_info?.school_name || "--"}
             </p>
           </div>
         </div>
@@ -75,20 +79,26 @@ const ProfileView: React.FC<ProfileViewProps> = ({ onEdit }: any) => {
           <div className="text-start">
             <p className="font-bold text-sm">School Code</p>
             <p className="text-gray-600 text-sm">
-              {profileData?.school_info?.school_u_dise}
+              {profileData?.school_info?.school_u_dise || "--"}
             </p>
           </div>
           <div className="text-start pt-8">
             <p className="font-bold text-sm">Teacher Code</p>
-            <p className="text-gray-600 text-sm">{profileData?.teachercode}</p>
+            <p className="text-gray-600 text-sm">
+              {profileData?.teachercode || "--"}
+            </p>
           </div>
           <div className="text-start pt-8">
             <p className="font-bold text-sm">Class Group</p>
-            <p className="text-gray-600 text-sm">{profileData?.classgroup}</p>
+            <p className="text-gray-600 text-sm">
+              {profileData?.classgroup || "--"}
+            </p>
           </div>
           <div className="text-start pt-8">
             <p className="font-bold text-sm">Subject Name</p>
-            <p className="text-gray-600 text-sm">{profileData?.subjectname}</p>
+            <p className="text-gray-600 text-sm">
+              {profileData?.subjectname || "--"}
+            </p>
           </div>
         </div>
       </div>

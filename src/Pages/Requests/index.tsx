@@ -7,7 +7,7 @@ import { useGetUsersMutation } from "../../services/users.api";
 import FullScreenLoader from "../../Components/Loader/Loader";
 import Modal from "../../Components/Modal";
 
-const AdminHome = () => {
+const Requests = () => {
   const [profileData, setProfileData] = useState<any>();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState<any>({});
@@ -77,4 +77,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default Requests;

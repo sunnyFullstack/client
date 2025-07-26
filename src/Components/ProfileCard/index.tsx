@@ -19,7 +19,7 @@ const ProfileCard = ({
     <>
       <div
         key={index}
-        className="w-[250px] flex flex-col items-center bg-[#807a7a0d] shadow-custom rounded-xl py-4"
+        className="w-[250px] flex flex-col items-center bg-primary shadow-custom rounded-xl py-4"
       >
         <img
           className="w-24 h-24 rounded-full mx-auto mt-2 object-cover border-2 border-white"
@@ -31,13 +31,13 @@ const ProfileCard = ({
           <p className="text-sm font-bold text-gray-800 text-primary">
             {maskName(`${item.firstname} ${item.lastname}`)}
           </p>
-          <p className="mt-1 text-sm text-gray-500 dark:text-neutral-400 text-primary">
+          <p className="mt-1 text-sm text-gray-500 dark:text-neutral-400 text-secondary">
             {maskEmail(item.email)}
           </p>
-          <p className="mt-1 text-sm text-gray-500 dark:text-neutral-400 text-primary">
+          <p className="mt-1 text-sm text-gray-500 dark:text-neutral-400 text-secondary">
             {maskPhone(item.mobile)}
           </p>
-          <p className="mt-1 text-sm text-gray-500 dark:text-neutral-400 text-primary">
+          <p className="mt-1 text-sm text-gray-500 dark:text-neutral-400 text-secondary">
             Desired Location: {item?.desired_transfer_location?.state || "N/A"}
           </p>
           <Button

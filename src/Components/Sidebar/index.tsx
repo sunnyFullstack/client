@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoImg from "../../assets/images/logo.jpg";
 import Logo from "../../Components/Logo";
 import Button from "../Button";
@@ -17,6 +17,8 @@ import {
 const Sidebar = () => {
   const [logout, { data, isLoading, isSuccess, error, status, isError }] =
     useLogoutMutation();
+  const location = useLocation();
+  const pathname = location.pathname;
   const navigate = useNavigate();
   const logoutHandle = () => {
     logout();
@@ -26,6 +28,12 @@ const Sidebar = () => {
       navigate(0);
     }
   }, [isSuccess, status]);
+  const linkClass = (path: string) =>
+    `flex items-center gap-3 rounded p-2 transition${
+      pathname === path
+        ? "bg-gray-700 text-linkBlue"
+        : "hover:bg-gray-700 text-primary"
+    }`;
   return (
     // 1b1b1f
     <div className=" h-screen w-64 bg-[#1b1b18] text-white shadow-lg z-40">
@@ -33,31 +41,19 @@ const Sidebar = () => {
         <Logo src={logoImg} size={100} className="border-2 border-grey" />
       </div>
       <nav className="p-4 space-y-4">
-        <Link
-          to="/home"
-          className="flex items-center gap-3 hover:bg-gray-700 p-2 text-primary rounded transition"
-        >
+        <Link to="/home" className={linkClass("/home")}>
           <Home size={20} />
           Home
         </Link>
-        <Link
-          to="/request"
-          className="flex items-center gap-3 hover:bg-gray-700 p-2 text-primary rounded transition"
-        >
+        <Link to="/request" className={linkClass("/request")}>
           <List size={20} />
           List Of Requests
         </Link>
-        <Link
-          to="/profile"
-          className="flex items-center gap-3 hover:bg-gray-700 p-2 text-primary rounded transition"
-        >
+        <Link to="/profile" className={linkClass("/profile")}>
           <UserIcon size={20} />
           Profile
         </Link>
-        <Link
-          to="/found-your-match"
-          className="flex items-center gap-3 hover:bg-gray-700 p-2 text-primary rounded transition"
-        >
+        <Link to="/found-your-match" className={linkClass("/found-your-match")}>
           <PersonStanding size={20} />
           Your match
         </Link>

@@ -13,6 +13,7 @@ const ProfilePage = () => {
   useEffect(() => {
     getProfileDetails();
   }, []);
+
   const userData = data?.data;
   const [formData, setFormData] = useState({
     name: `${userData?.firstname} ${userData?.lastname}`,

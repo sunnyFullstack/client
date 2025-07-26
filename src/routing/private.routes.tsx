@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
-import AdminHome from "../Pages/AdminHome";
+import { Link, Outlet } from "react-router-dom";
+import Requests from "../Pages/Requests";
 import ProtectedRoute from "../Components/protected-routes";
 import Sidebar from "../Components/Sidebar";
 import ProfilePage from "../Pages/Profile";
 import MobileSidebar from "../Components/Sidebar/MobileSidebar";
 import Home from "../Pages/Home";
 import YourMatch from "../Pages/YourMatch";
+import { useGetProfileQuery } from "../services/auth.api";
 
 const AdminLayout = () => {
+  const { data, isSuccess, isError, isLoading } = useGetProfileQuery();
+  console.log(data, "mnmnmn");
   return (
     <div className="flex min-h-screen">
       {/* Desktop Sidebar */}
@@ -24,6 +27,14 @@ const AdminLayout = () => {
       {/* Right Content */}
 
       <main className="p-4 flex-1 bg-[#1b1b1f] overflow-scroll h-[100vh]">
+        {data?.isProfileComplete && (
+          <p className="text-red">
+            <p> For better match.</p> Please complete your profile.{" "}
+            <Link to="/profile" className="text-linkBlue">
+              Click here.....
+            </Link>
+          </p>
+        )}
         <Outlet />
       </main>
     </div>
@@ -40,7 +51,7 @@ const routers = [
       },
       {
         path: "/request",
-        element: <ProtectedRoute element={<AdminHome />} />,
+        element: <ProtectedRoute element={<Requests />} />,
       },
       {
         path: "/profile",

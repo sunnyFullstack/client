@@ -4,6 +4,7 @@ import { useGetProfileDetailMutation } from "../../services/auth.api";
 import femaleIcon from "../../assets/svg/female.svg";
 import maleIcon from "../../assets/svg/male.svg";
 import FullScreenLoader from "../../Components/Loader/Loader";
+import { Link } from "react-router-dom";
 
 const YourMatch = () => {
   const [getUserMatch, { data, isLoading, isSuccess, error, status, isError }] =
@@ -23,6 +24,16 @@ const YourMatch = () => {
       });
     }
   }, [profileData]);
+  if (!data?.data || data?.data?.length === 0) {
+    return (
+      <div className="text-center text-gray-500 text-lg py-4 h-screen items-center flex justify-center flex-col">
+        <p className="text-primary"> Match Data not found</p>
+        <Link to="/profile" className="text-linkBlue">
+          Go back on profile Home
+        </Link>
+      </div>
+    );
+  }
   return (
     <div className="flex gap-4 justify-center flex-wrap">
       {isLoading && <FullScreenLoader />}
