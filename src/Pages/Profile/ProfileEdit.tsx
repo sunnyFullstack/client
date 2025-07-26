@@ -15,9 +15,7 @@ import {
 import { profileValidationSchema } from "../../validation/registerValidation";
 import FullScreenLoader from "../../Components/Loader/Loader";
 
-import Modal from "../../Components/Modal";
-
-const ProfileEdit = ({ formData, onCancel }: any) => {
+const ProfileEdit = ({ formData, onCancel, setIsEditMode }: any) => {
   const [isOpen, setIsOpen] = useState(true);
   const [profileEdit, { data, isLoading, isSuccess, error, status, isError }] =
     useProfileEditMutation();
@@ -25,13 +23,15 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
   useEffect(() => {
     if (isSuccess && status === "fulfilled") {
       let timeoutRoute = setTimeout(() => {
-        navigate("/signin");
+        setIsEditMode(false);
+        formik.resetForm();
       }, 3000);
       return () => {
         clearTimeout(timeoutRoute);
       };
     }
   }, [isSuccess, status]);
+
   const formik: any = useFormik({
     initialValues: {
       firstname: formData?.firstname,
@@ -41,17 +41,17 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
       gender: formData?.gender,
       schoolname: formData?.school_info?.school_name,
       schoolcode: formData?.school_info?.school_u_dise,
-      teachercode: "",
-      classgroup: "",
-      subjectname: "",
-      state: "",
-      district: "",
-      block: "",
-      village: "",
-      t_state: "",
-      t_district: "",
-      t_block: "",
-      t_village: "",
+      teachercode: formData?.teachercode,
+      classgroup: formData?.classgroup,
+      subjectname: formData?.subjectname,
+      state: formData?.work_location?.state,
+      district: formData?.work_location?.district,
+      block: formData?.work_location?.block,
+      village: formData?.work_location?.village,
+      t_state: formData?.desired_transfer_location?.state,
+      t_district: formData?.desired_transfer_location?.district,
+      t_block: formData?.desired_transfer_location?.block,
+      t_village: formData?.desired_transfer_location?.village,
     },
     validationSchema: profileValidationSchema,
     validateOnBlur: true,
@@ -80,8 +80,6 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
           t_block: values.t_block,
           t_village: values.t_village,
         }).unwrap();
-
-        formik.resetForm();
       } catch (error: any) {
         // showToast("something went wrong!");
       }
@@ -110,7 +108,6 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
   const selectedStateObj: any = statesWithDistricts.find(
     (s) => s.state === formik.values.state
   );
-
   const selectedDistrictObj: any = selectedStateObj?.districts?.find(
     (d: any) => (typeof d === "object" ? d.name : d) === formik.values.district
   );
@@ -133,7 +130,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
   const selectedClassGroup: any = classGroup.find(
     (s: any) => s.name === formik.values.classgroup
   );
-  // console.log(selectedClassGroup, "sdfsdf", formik.errors);
+
   return (
     <Container className="md:w-[90%] bg-primary flex justify-center items-center">
       {isLoading && <FullScreenLoader />}
@@ -246,6 +243,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 handleChange(e);
                 formik.setFieldValue("district", "");
                 formik.setFieldValue("block", "");
+                formik.setFieldValue("village", "");
               }}
               onBlur={formik.handleBlur}
               options={statesWithDistricts.map((s) => ({
@@ -262,6 +260,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 onChange={(e) => {
                   handleChange(e);
                   formik.setFieldValue("block", "");
+                  formik.setFieldValue("village", "");
                 }}
                 onBlur={formik.handleBlur}
                 options={(selectedStateObj?.districts || []).map(

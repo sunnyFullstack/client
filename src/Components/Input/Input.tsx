@@ -28,7 +28,6 @@ const Input: React.FC<InputProps> = ({
   isDisable,
   key,
 }) => {
-  console.log(error, "error", name);
   return (
     <>
       {label ? (

@@ -6,7 +6,7 @@ import Sidebar from "../Components/Sidebar";
 import ProfilePage from "../Pages/Profile";
 import MobileSidebar from "../Components/Sidebar/MobileSidebar";
 import Home from "../Pages/Home";
-import Setting from "../Pages/Setting";
+import YourMatch from "../Pages/YourMatch";
 
 const AdminLayout = () => {
   return (
@@ -48,7 +48,7 @@ const routers = [
       },
       {
         path: "/found-your-match",
-        element: <ProtectedRoute element={<Setting />} />,
+        element: <ProtectedRoute element={<YourMatch />} />,
       },
     ],
   },

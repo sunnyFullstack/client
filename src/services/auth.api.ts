@@ -24,10 +24,10 @@ export const authApi: any = api.injectEndpoints({
       }),
     }),
     login: builder.mutation<LoginResponse, LoginRequest>({
-      query: (credentials) => ({
+      query: (body) => ({
         url: "/auth/login",
         method: "POST",
-        body: credentials,
+        body: body,
       }),
     }),
     getProfile: builder.query<{ name: string; email: string }, void>({
@@ -44,6 +44,13 @@ export const authApi: any = api.injectEndpoints({
         credentials: "include", // ✅ include cookies in request
       }),
     }),
+    getProfileDetail: builder.mutation<{}, void>({
+      query: () => ({
+        url: "/auth/profile",
+        method: "GET",
+        credentials: "include", // ✅ include cookies in request
+      }),
+    }),
   }),
 });
 
@@ -53,4 +60,5 @@ export const {
   useLoginMutation,
   useGetProfileQuery,
   useLogoutMutation,
+  useGetProfileDetailMutation,
 } = authApi;

@@ -10,6 +10,7 @@ import {
   RefreshCcw,
   Settings,
   LogOut,
+  PersonStanding,
   UserIcon,
 } from "lucide-react";
 
@@ -57,7 +58,7 @@ const Sidebar = () => {
           to="/found-your-match"
           className="flex items-center gap-3 hover:bg-gray-700 p-2 text-primary rounded transition"
         >
-          <Settings size={20} />
+          <PersonStanding size={20} />
           Your match
         </Link>
         <p

@@ -17,6 +17,14 @@ export const userApi: any = api.injectEndpoints({
         credentials: "include", // ✅ include cookies in request
       }),
     }),
+    getUserMatch: builder.mutation<any, any>({
+      query: (body) => ({
+        url: "/v1/match",
+        method: "POST",
+        body: body, // ✅ include cookies in request
+        // credentials: "include",
+      }),
+    }),
   }),
 });
-export const { useGetUsersMutation } = userApi;
+export const { useGetUsersMutation, useGetUserMatchMutation } = userApi;

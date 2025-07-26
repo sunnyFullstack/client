@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileView from "./ProfileView";
 import ProfileEdit from "./ProfileEdit";
-import { useGetProfileQuery } from "../../services/auth.api";
+import { useGetProfileDetailMutation } from "../../services/auth.api";
 import FullScreenLoader from "../../Components/Loader/Loader";
 
 const ProfilePage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const { data, isSuccess, isError, isLoading } = useGetProfileQuery();
-
+  const [
+    getProfileDetails,
+    { data, isLoading, isSuccess, error, status, isError },
+  ] = useGetProfileDetailMutation();
+  useEffect(() => {
+    getProfileDetails();
+  }, []);
   const userData = data?.data;
   const [formData, setFormData] = useState({
     name: `${userData?.firstname} ${userData?.lastname}`,
@@ -46,10 +51,11 @@ const ProfilePage = () => {
           onImageChange={handleImageChange}
           onCancel={() => setIsEditMode(false)}
           onSave={handleSave}
+          setIsEditMode={setIsEditMode}
         />
       ) : (
         <div className="w-[90%] ">
-          <ProfileView data={userData} onEdit={() => setIsEditMode(true)} />
+          <ProfileView onEdit={() => setIsEditMode(true)} />
         </div>
       )}
     </div>
