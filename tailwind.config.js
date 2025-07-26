@@ -13,6 +13,15 @@ module.exports = {
       boxShadow: {
         custom: "0 0 10px rgba(0, 0, 0, 0.2)", // all sides
       },
+      animation: {
+        fadeIn: "fadeIn 0.3s ease-out",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+      },
     },
     colors: {
       primary: "#FFFFFF",

@@ -79,12 +79,12 @@ const MobileSidebar = () => {
             Profile
           </Link>
           <Link
-            to="/settings"
+            to="/found-your-match"
             onClick={closeSidebar}
             className="flex items-center gap-3 p-2 text-primary rounded transition"
           >
             <Settings size={20} />
-            Settings
+            Your match
           </Link>
           <button
             onClick={logoutHandle}

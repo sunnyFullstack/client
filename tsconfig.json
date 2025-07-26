@@ -10,5 +10,5 @@
     "esModuleInterop": true,
     "typeRoots": ["./src/types", "./node_modules/@types"]
   },
-  "include": ["src/**/*", "../backend/utils/decodeToken.js"]
+  "include": ["src", "src/**/*", "../backend/utils/decodeToken.js"]
 }

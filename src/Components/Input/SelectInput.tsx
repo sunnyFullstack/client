@@ -29,7 +29,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   error,
 }) => {
   return (
-    <div>
+    <div className="mb-4">
       {label && (
         <label
           htmlFor={name}
@@ -50,12 +50,13 @@ const SelectInput: React.FC<SelectInputProps> = ({
         <option value="" disabled>
           -- Select --
         </option>
-        {options.map((opt) => (
+        {options.map((opt, index) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>
         ))}
       </select>
+      {error && <p className="text-red text-xs">{error}</p>}
     </div>
   );
 };

@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import Container from "../../Components/Container";
 import Button from "../../Components/Button";
-import {
-  useProfileEditMutation,
-  useRegisterMutation,
-} from "../../services/auth.api";
+import { useProfileEditMutation } from "../../services/auth.api";
 import Input from "../../Components/Input/Input";
 import { useNavigate } from "react-router-dom";
 import SelectInput from "../../Components/Input/SelectInput";
@@ -15,24 +12,18 @@ import {
   statesWithDistricts,
   teacherCode,
 } from "../../constant";
-import Logo from "../../Components/Logo";
-import logoImg from "../../assets/images/logo.jpg";
-import {
-  profileValidationSchema,
-  registerValidationSchema,
-} from "../../validation/registerValidation";
+import { profileValidationSchema } from "../../validation/registerValidation";
 import FullScreenLoader from "../../Components/Loader/Loader";
 
+import Modal from "../../Components/Modal";
+
 const ProfileEdit = ({ formData, onCancel }: any) => {
+  const [isOpen, setIsOpen] = useState(true);
   const [profileEdit, { data, isLoading, isSuccess, error, status, isError }] =
     useProfileEditMutation();
   const navigate = useNavigate();
-  console.log(useRegisterMutation(), "+++", data);
   useEffect(() => {
     if (isSuccess && status === "fulfilled") {
-      // showToast(
-      //   `User is created successfully and username is ${data?.username}`
-      // );
       let timeoutRoute = setTimeout(() => {
         navigate("/signin");
       }, 3000);
@@ -43,13 +34,13 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
   }, [isSuccess, status]);
   const formik: any = useFormik({
     initialValues: {
-      firstname: formData.firstname,
-      lastname: formData.lastname,
-      mobile: formData.mobile,
-      email: formData.email,
-      gender: "",
-      schoolname: "",
-      schoolcode: "",
+      firstname: formData?.firstname,
+      lastname: formData?.lastname,
+      mobile: formData?.mobile,
+      email: formData?.email,
+      gender: formData?.gender,
+      schoolname: formData?.school_info?.school_name,
+      schoolcode: formData?.school_info?.school_u_dise,
       teachercode: "",
       classgroup: "",
       subjectname: "",
@@ -65,28 +56,9 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
     validationSchema: profileValidationSchema,
     validateOnBlur: true,
     validateOnChange: true,
+
     onSubmit: async (values) => {
-      formik.setTouched({
-        firstname: true,
-        lastname: true,
-        mobile: true,
-        email: true,
-        gender: true,
-        schoolname: true,
-        schoolcode: true,
-        teachercode: true,
-        classgroup: true,
-        subjectname: true,
-        state: true,
-        district: true,
-        block: true,
-        village: true,
-        t_state: true,
-        t_district: true,
-        t_block: true,
-        t_village: true,
-      });
-      console.log(values, "values");
+      const errors = await formik.validateForm();
       try {
         await profileEdit({
           firstname: values.firstname,
@@ -94,7 +66,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
           mobile: values.mobile,
           email: values.email,
           gender: values.gender,
-          schoolname: values.schoolcode,
+          schoolname: values.schoolname,
           schoolcode: values.schoolcode,
           teachercode: values.teachercode,
           classgroup: values.classgroup,
@@ -115,7 +87,26 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
       }
     },
   });
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errors = await formik.validateForm();
+    if (Object.keys(errors).length > 0) {
+      formik.setTouched(
+        Object.keys(errors).reduce((acc, key) => {
+          acc[key] = true;
+          return acc;
+        }, {} as any)
+      );
+      return;
+    }
+    formik.handleSubmit(); // now fires if form is valid
+  };
+  const handleChange = async (e: any) => {
+    e.preventDefault();
+    formik.handleChange(e);
+    formik.setFieldValue(e.target.name, e.target.value);
+    formik.setTouched(e.target.name, false);
+  };
   const selectedStateObj: any = statesWithDistricts.find(
     (s) => s.state === formik.values.state
   );
@@ -142,17 +133,17 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
   const selectedClassGroup: any = classGroup.find(
     (s: any) => s.name === formik.values.classgroup
   );
-  console.log(formik.errors, "sdfsdf");
+  // console.log(selectedClassGroup, "sdfsdf", formik.errors);
   return (
     <Container className="md:w-[90%] bg-primary flex justify-center items-center">
       {isLoading && <FullScreenLoader />}
       <div className="h-fit xl:w-full lg:w-full md:w-[100%] sm:w-full xs:w-full  rounded-xl p-8 bg-gray-100">
-        <form onSubmit={formik.handleSubmit}>
+        <form>
           <div className="pt-4 pb-2">
             <p className="text-xl">General information</p>
           </div>
           <div className="grid grid-cols-4 gap-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1">
-            {profileEditField?.map(({ label, name, type, isDisable }) => (
+            {profileEditField?.map(({ label, name, type, isDisable }, obj) => (
               <Input
                 isDisable={isDisable}
                 key={name}
@@ -160,7 +151,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 name={name}
                 type={type}
                 value={formik.values[name]}
-                onChange={formik.handleChange}
+                onChange={handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched[name] && formik.errors[name]}
                 className="w-full"
@@ -172,7 +163,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
               label="Teacher Code"
               value={formik.values.teachercode}
               onChange={(e) => {
-                formik.handleChange(e);
+                handleChange(e);
               }}
               onBlur={formik.handleBlur}
               options={teacherCode.map((s) => ({
@@ -186,7 +177,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
               label="Class Group"
               value={formik.values.classgroup}
               onChange={(e) => {
-                formik.handleChange(e);
+                handleChange(e);
                 formik.setFieldValue("subjectname", "");
               }}
               onBlur={formik.handleBlur}
@@ -202,7 +193,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 label="subject Name"
                 value={formik.values.subjectname}
                 onChange={(e) => {
-                  formik.handleChange(e);
+                  handleChange(e);
                 }}
                 onBlur={formik.handleBlur}
                 options={(selectedClassGroup?.subjects || []).map(
@@ -214,7 +205,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 error={formik.touched.subjectname && formik.errors.subjectname}
               />
             )}
-            <div className="flex gap-4">
+            <div className="flex gap-4 justify-center items-center pt-[25px]">
               <div>Gender</div>
               <div className="flex items-center space-x-6">
                 <label className="inline-flex items-center text-white">
@@ -222,7 +213,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                     type="radio"
                     name="gender"
                     value="Male"
-                    onChange={formik.handleChange}
+                    onChange={handleChange}
                     checked={formik.values.gender === "Male"}
                     className="form-radio text-blue-500"
                   />
@@ -234,7 +225,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                     type="radio"
                     name="gender"
                     value="Female"
-                    onChange={formik.handleChange}
+                    onChange={handleChange}
                     checked={formik.values.gender === "Female"}
                     className="form-radio text-pink-500"
                   />
@@ -252,7 +243,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
               label="State"
               value={formik.values.state}
               onChange={(e) => {
-                formik.handleChange(e);
+                handleChange(e);
                 formik.setFieldValue("district", "");
                 formik.setFieldValue("block", "");
               }}
@@ -269,7 +260,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 label="District"
                 value={formik.values.district}
                 onChange={(e) => {
-                  formik.handleChange(e);
+                  handleChange(e);
                   formik.setFieldValue("block", "");
                 }}
                 onBlur={formik.handleBlur}
@@ -291,7 +282,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 label="Block"
                 value={formik.values.block}
                 onChange={(e) => {
-                  formik.handleChange(e);
+                  handleChange(e);
                   formik.setFieldValue("village", "");
                 }}
                 onBlur={formik.handleBlur}
@@ -309,7 +300,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 name="village"
                 label="Village"
                 value={formik.values.village}
-                onChange={formik.handleChange}
+                onChange={handleChange}
                 onBlur={formik.handleBlur}
                 options={(selectedBlockObj?.villages || []).map(
                   (village: any) => ({
@@ -330,7 +321,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
               label="State"
               value={formik.values.t_state}
               onChange={(e) => {
-                formik.handleChange(e);
+                handleChange(e);
                 formik.setFieldValue("t_district", "");
                 formik.setFieldValue("t_block", "");
                 formik.setFieldValue("t_village", "");
@@ -349,7 +340,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 label="District"
                 value={formik.values.t_district}
                 onChange={(e) => {
-                  formik.handleChange(e);
+                  handleChange(e);
                   formik.setFieldValue("t_block", "");
                   formik.setFieldValue("t_village", "");
                 }}
@@ -368,7 +359,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 label="Block"
                 value={formik.values.t_block}
                 onChange={(e) => {
-                  formik.handleChange(e);
+                  handleChange(e);
                   formik.setFieldValue("t_village", "");
                 }}
                 onBlur={formik.handleBlur}
@@ -385,7 +376,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                 name="t_village"
                 label="Village"
                 value={formik.values.t_village}
-                onChange={formik.handleChange}
+                onChange={handleChange}
                 onBlur={formik.handleBlur}
                 options={selectedTargetBlockObj.villages.map((v: any) => ({
                   label: v,
@@ -402,6 +393,7 @@ const ProfileEdit = ({ formData, onCancel }: any) => {
                   variant="success"
                   type="submit"
                   className="w-[100%] h-10 text-primary text-bold mt-5"
+                  onClick={handleSubmit}
                 >
                   Edit
                 </Button>

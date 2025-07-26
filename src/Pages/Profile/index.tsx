@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import ProfileView from "./ProfileView";
 import ProfileEdit from "./ProfileEdit";
 import { useGetProfileQuery } from "../../services/auth.api";
+import FullScreenLoader from "../../Components/Loader/Loader";
 
 const ProfilePage = () => {
-  const [isEditMode, setIsEditMode] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
   const { data, isSuccess, isError, isLoading } = useGetProfileQuery();
 
-  const userData = data?.user;
+  const userData = data?.data;
   const [formData, setFormData] = useState({
     name: `${userData?.firstname} ${userData?.lastname}`,
     email: userData?.email,
@@ -35,9 +36,9 @@ const ProfilePage = () => {
   const handleSave = () => {
     setIsEditMode(false);
   };
-
   return (
     <div className="w-[100%] h-auto overflow-auto flex justify-center py-10">
+      {isLoading && <FullScreenLoader />}
       {isEditMode ? (
         <ProfileEdit
           formData={userData}
@@ -48,7 +49,7 @@ const ProfilePage = () => {
         />
       ) : (
         <div className="w-[90%] ">
-          <ProfileView data={formData} onEdit={() => setIsEditMode(true)} />
+          <ProfileView data={userData} onEdit={() => setIsEditMode(true)} />
         </div>
       )}
     </div>

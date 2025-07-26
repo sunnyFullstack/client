@@ -32,6 +32,19 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
+      // SVG as ReactComponent
+      {
+        test: /\.svg$/i,
+        oneOf: [
+          {
+            resourceQuery: /react/, // ?react
+            use: ["@svgr/webpack"],
+          },
+          {
+            type: "asset/resource",
+          },
+        ],
+      },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: "asset/resource", // ✅ This emits the image as a separate file

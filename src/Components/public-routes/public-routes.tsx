@@ -4,7 +4,6 @@ import useAuthStatus from "../../hooks/useAuthStatus";
 
 const PublicRoute = ({ element }: { element: JSX.Element }) => {
   const { isLoggedIn, isLoading, user } = useAuthStatus();
-  console.log(isLoggedIn, "isLoggedIn");
 
   if (isLoading) return <div>Loading...</div>;
 

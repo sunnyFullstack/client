@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStatus from "../../hooks/useAuthStatus";
+import FullScreenLoader from "../Loader/Loader";
 
 interface ProtectedRouteProps {
   element: JSX.Element;
@@ -15,11 +16,7 @@ const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
     }
   }, [isLoading, isLoggedIn, navigate]);
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen text-white text-xl">
-        Loading...
-      </div>
-    );
+    return <>{isLoading && <FullScreenLoader />}</>;
   }
 
   return isLoggedIn && element;

@@ -54,11 +54,11 @@ const Sidebar = () => {
           Profile
         </Link>
         <Link
-          to="/settings"
+          to="/found-your-match"
           className="flex items-center gap-3 hover:bg-gray-700 p-2 text-primary rounded transition"
         >
           <Settings size={20} />
-          Settings
+          Your match
         </Link>
         <p
           className="flex items-center gap-3 bg-none underline text-primary font-bold pl-[10px] cursor-pointer"

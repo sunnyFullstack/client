@@ -37,13 +37,13 @@ const Register = () => {
   }, [isSuccess, status]);
   const formik: any = useFormik({
     initialValues: {
-      firstname: "sunny",
-      lastname: "singh",
-      mobile: "7017397802",
-      email: "sunnyharshsunny12345@gmail.com",
-      password: "Sunny@123",
-      cnfPassword: "Sunny@123",
-      gender: "Male",
+      firstname: "",
+      lastname: "",
+      mobile: "",
+      email: "",
+      password: "",
+      cnfPassword: "",
+      gender: "",
     },
     validationSchema: registerValidationSchema,
     validateOnBlur: true,
@@ -70,7 +70,7 @@ const Register = () => {
         }).unwrap();
         formik.resetForm();
       } catch (error: any) {
-        console.log(error, "mmmmmmm");
+        // console.log(error, "mmmmmmm");
         showToast("something went wrong!", "error");
       }
     },
